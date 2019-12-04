@@ -44,7 +44,6 @@ public class RemoteSkierService implements ISkierService {
             writeErrorMsg(resp);
             return;
         }
-        uri = uri.replace("/server_war/", "");
         String[] paras = uri.split("/");
         if (!isValid(paras)) {
             writeErrorMsg(resp);
@@ -52,7 +51,7 @@ public class RemoteSkierService implements ISkierService {
         }
 
         Skier skier = new Skier(Integer.parseInt(paras[2]), paras[4], paras[6],
-                Integer.parseInt(paras[8]), liftRide.getTime(), liftRide.getLiftID() * 10);
+                Integer.parseInt(paras[8]), liftRide.getTime(), liftRide.getLiftID());
         queueService.enqueue(skier);
         resp.setStatus(SUCCESS_CODE);
     }
@@ -61,7 +60,6 @@ public class RemoteSkierService implements ISkierService {
     public void getTotalVertical(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         SkiersApi skiersApi = HttpUtil.skiersApi();
         String uri = req.getRequestURI();
-        uri = uri.replace("/server_war", "");
         String[] paras = uri.split("/");
         PrintWriter printWriter = resp.getWriter();
         Integer res = 0;
